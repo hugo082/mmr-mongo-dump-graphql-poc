@@ -2,30 +2,89 @@
 ### Do not make changes to this file directly
 
 
-type Ad {
-  AdAccount: AdAccount!
+"""Query your root entity"""
+type Entity {
+  EntityLink(
+    """Entity database"""
+    database: String
+    ids: [String!]
+    link: LinkArg!
 
-  """Id of the ad"""
+    """Entity collection name"""
+    name: String!
+  ): EntityLink
+  EntityReference(
+    """Entity database"""
+    database: String
+    ids: [String!]
+
+    """Entity collection name"""
+    name: String!
+    ref: ReferenceArg!
+  ): EntityReference
+
+  """Id of the entity"""
   id: String!
 }
 
-type AdAccount {
-  """Id of the ad"""
-  id: String!
+type EntityLink {
+  EntityLink(
+    """Entity database"""
+    database: String
+    ids: [String!]
+    link: LinkArg!
 
-  """Id of the ad"""
-  name: String!
-  Users: [User!]!
+    """Entity collection name"""
+    name: String!
+  ): EntityLink!
+  EntityReference(
+    """Entity database"""
+    database: String
+    ids: [String!]
+
+    """Entity collection name"""
+    name: String!
+    ref: ReferenceArg!
+  ): [EntityReference!]!
+
+  """Id of the entity"""
+  id: String!
+}
+
+type EntityReference {
+  EntityReference(
+    """Entity database"""
+    database: String
+    ids: [String!]
+
+    """Entity collection name"""
+    name: String!
+    ref: ReferenceArg!
+  ): EntityReference!
+
+  """Id of the entity"""
+  id: String!
+}
+
+input LinkArg {
+  """Field name od the link"""
+  field: String!
+  list: Boolean = false
 }
 
 type Query {
-  Ad: [Ad!]!
+  Entity(
+    """Entity database"""
+    database: String
+    ids: [String!]
+
+    """Entity collection name"""
+    name: String!
+  ): [Entity!]!
 }
 
-type User {
-  """Id of the ad"""
-  id: String!
-
-  """Id of the ad"""
-  name: String!
+input ReferenceArg {
+  """Field name od the link"""
+  field: String!
+  list: Boolean = false
 }

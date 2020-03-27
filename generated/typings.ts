@@ -14,24 +14,30 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  LinkArg: { // input type
+    field: string; // String!
+    list?: boolean | null; // Boolean
+  }
+  ReferenceArg: { // input type
+    field: string; // String!
+    list?: boolean | null; // Boolean
+  }
 }
 
 export interface NexusGenEnums {
 }
 
 export interface NexusGenRootTypes {
-  Ad: { // root type
+  Entity: { // root type
     id: string; // String!
   }
-  AdAccount: { // root type
+  EntityLink: { // root type
     id: string; // String!
-    name: string; // String!
+  }
+  EntityReference: { // root type
+    id: string; // String!
   }
   Query: {};
-  User: { // root type
-    id: string; // String!
-    name: string; // String!
-  }
   String: string;
   Int: number;
   Float: number;
@@ -40,28 +46,74 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  LinkArg: NexusGenInputs['LinkArg'];
+  ReferenceArg: NexusGenInputs['ReferenceArg'];
 }
 
 export interface NexusGenFieldTypes {
-  Ad: { // field return type
-    AdAccount: NexusGenRootTypes['AdAccount']; // AdAccount!
+  Entity: { // field return type
+    EntityLink: NexusGenRootTypes['EntityLink'] | null; // EntityLink
+    EntityReference: NexusGenRootTypes['EntityReference'] | null; // EntityReference
     id: string; // String!
   }
-  AdAccount: { // field return type
+  EntityLink: { // field return type
+    EntityLink: NexusGenRootTypes['EntityLink']; // EntityLink!
+    EntityReference: NexusGenRootTypes['EntityReference'][]; // [EntityReference!]!
     id: string; // String!
-    name: string; // String!
-    Users: NexusGenRootTypes['User'][]; // [User!]!
+  }
+  EntityReference: { // field return type
+    EntityReference: NexusGenRootTypes['EntityReference']; // EntityReference!
+    id: string; // String!
   }
   Query: { // field return type
-    Ad: NexusGenRootTypes['Ad'][]; // [Ad!]!
-  }
-  User: { // field return type
-    id: string; // String!
-    name: string; // String!
+    Entity: NexusGenRootTypes['Entity'][]; // [Entity!]!
   }
 }
 
 export interface NexusGenArgTypes {
+  Entity: {
+    EntityLink: { // args
+      database?: string | null; // String
+      ids?: string[] | null; // [String!]
+      link: NexusGenInputs['LinkArg']; // LinkArg!
+      name: string; // String!
+    }
+    EntityReference: { // args
+      database?: string | null; // String
+      ids?: string[] | null; // [String!]
+      name: string; // String!
+      ref: NexusGenInputs['ReferenceArg']; // ReferenceArg!
+    }
+  }
+  EntityLink: {
+    EntityLink: { // args
+      database?: string | null; // String
+      ids?: string[] | null; // [String!]
+      link: NexusGenInputs['LinkArg']; // LinkArg!
+      name: string; // String!
+    }
+    EntityReference: { // args
+      database?: string | null; // String
+      ids?: string[] | null; // [String!]
+      name: string; // String!
+      ref: NexusGenInputs['ReferenceArg']; // ReferenceArg!
+    }
+  }
+  EntityReference: {
+    EntityReference: { // args
+      database?: string | null; // String
+      ids?: string[] | null; // [String!]
+      name: string; // String!
+      ref: NexusGenInputs['ReferenceArg']; // ReferenceArg!
+    }
+  }
+  Query: {
+    Entity: { // args
+      database?: string | null; // String
+      ids?: string[] | null; // [String!]
+      name: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
@@ -69,9 +121,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Ad" | "AdAccount" | "Query" | "User";
+export type NexusGenObjectNames = "Entity" | "EntityLink" | "EntityReference" | "Query";
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = "LinkArg" | "ReferenceArg";
 
 export type NexusGenEnumNames = never;
 
