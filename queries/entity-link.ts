@@ -32,6 +32,7 @@ export const EntityLink = objectType({
     name: "EntityLink",
     definition(t) {
         t.string("id", { description: "Id of the entity" })
+        t.field("_meta", { type: "EntityMeta" })
         t.field("EntityLink", {
             type: "EntityLink",
             args: EntityLinkArgs,

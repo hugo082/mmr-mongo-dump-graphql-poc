@@ -28,6 +28,7 @@ export const EntityReference = objectType({
     name: "EntityReference",
     definition(t) {
         t.string("id", { description: "Id of the entity" })
+        t.field("_meta", { type: "EntityMeta" })
         t.field("EntityReference", {
             type: "EntityReference",
             args: EntityReferenceArgs,

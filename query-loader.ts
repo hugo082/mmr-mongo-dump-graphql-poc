@@ -27,10 +27,16 @@ const forceIdField = (selectionSet: SelectionSetNode): SelectionSetNode => {
 
     return {
         ...selectionSet,
-        selections: selections.map(s => ({
-            ...s,
-            selectionSet: s.selectionSet ? forceIdField(s.selectionSet) : undefined
-        }))
+        selections: selections.map(s => {
+            if (s.name.value.startsWith("_")) {
+                return s
+            }
+
+            return {
+                ...s,
+                selectionSet: s.selectionSet ? forceIdField(s.selectionSet) : undefined
+            }
+        })
     }
 }
 

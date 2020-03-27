@@ -4,6 +4,7 @@
 
 """Query your root entity"""
 type Entity {
+  _meta: EntityMeta!
   EntityLink(
     """Entity database"""
     database: String
@@ -28,6 +29,7 @@ type Entity {
 }
 
 type EntityLink {
+  _meta: EntityMeta!
   EntityLink(
     """Entity database"""
     database: String
@@ -51,7 +53,14 @@ type EntityLink {
   id: String!
 }
 
+"""Entity metadata to process action on extracted datas"""
+type EntityMeta {
+  collection: String!
+  database: String!
+}
+
 type EntityReference {
+  _meta: EntityMeta!
   EntityReference(
     """Entity database"""
     database: String

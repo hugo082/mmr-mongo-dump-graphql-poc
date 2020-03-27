@@ -29,12 +29,19 @@ export interface NexusGenEnums {
 
 export interface NexusGenRootTypes {
   Entity: { // root type
+    _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
     id: string; // String!
   }
   EntityLink: { // root type
+    _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
     id: string; // String!
   }
+  EntityMeta: { // root type
+    collection: string; // String!
+    database: string; // String!
+  }
   EntityReference: { // root type
+    _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
     id: string; // String!
   }
   Query: {};
@@ -52,16 +59,23 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 
 export interface NexusGenFieldTypes {
   Entity: { // field return type
+    _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
     EntityLink: NexusGenRootTypes['EntityLink'] | null; // EntityLink
     EntityReference: NexusGenRootTypes['EntityReference'] | null; // EntityReference
     id: string; // String!
   }
   EntityLink: { // field return type
+    _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
     EntityLink: NexusGenRootTypes['EntityLink']; // EntityLink!
     EntityReference: NexusGenRootTypes['EntityReference'][]; // [EntityReference!]!
     id: string; // String!
   }
+  EntityMeta: { // field return type
+    collection: string; // String!
+    database: string; // String!
+  }
   EntityReference: { // field return type
+    _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
     EntityReference: NexusGenRootTypes['EntityReference']; // EntityReference!
     id: string; // String!
   }
@@ -121,7 +135,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Entity" | "EntityLink" | "EntityReference" | "Query";
+export type NexusGenObjectNames = "Entity" | "EntityLink" | "EntityMeta" | "EntityReference" | "Query";
 
 export type NexusGenInputNames = "LinkArg" | "ReferenceArg";
 

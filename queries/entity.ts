@@ -1,4 +1,4 @@
-import { queryType, stringArg, makeSchema, objectType, queryField, arg, inputObjectType } from "nexus"
+import { queryType, objectType } from "nexus"
 
 import { EntityArgs, EntityArgsType } from "./args/entity-args"
 import { db } from "../db"
@@ -6,6 +6,7 @@ import { EntityLinkArgs } from "./args/entity-link-args"
 import { entityLinkUniqueResolver } from "./entity-link"
 import { EntityReferenceArgs } from "./args/entity-reference"
 import { entityReferenceUniqueResolver } from "./entity-reference"
+import { addEntityMeta } from "../helpers"
 
 export const entityResolver = (args: EntityArgsType) => {
     let value =  db[args.name]
@@ -14,7 +15,7 @@ export const entityResolver = (args: EntityArgsType) => {
         value = value.filter(entity => args.ids.includes(entity.id))
     }
 
-    return value
+    return addEntityMeta<any>(value, args)
 }
 
 const Entity = objectType({
@@ -34,6 +35,7 @@ const Entity = objectType({
             nullable: true,
             resolve: entityReferenceUniqueResolver,
         })
+        t.field("_meta", { type: "EntityMeta" })
     },
 });
 
