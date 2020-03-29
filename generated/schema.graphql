@@ -30,15 +30,6 @@ type Entity {
 
 type EntityLink {
   _meta: EntityMeta!
-  EntityLink(
-    """Entity database"""
-    database: String
-    ids: [String!]
-    link: LinkArg!
-
-    """Entity collection name"""
-    name: String!
-  ): EntityLink!
   EntityReference(
     """Entity database"""
     database: String
@@ -51,6 +42,15 @@ type EntityLink {
 
   """Id of the entity"""
   id: String!
+  link(
+    """Entity database"""
+    database: String
+    ids: [String!]
+    link: LinkArg!
+
+    """Entity collection name"""
+    name: String!
+  ): EntityLink!
 }
 
 """Entity metadata to process action on extracted datas"""

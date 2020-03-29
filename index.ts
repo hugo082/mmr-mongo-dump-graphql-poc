@@ -2,8 +2,10 @@ import { makeSchema, objectType } from "nexus"
 import { graphql } from "graphql"
 import { loadQuery } from "./query-loader"
 import { EntityQuery } from "./queries/entity"
-import { EntityLink } from "./queries/entity-link"
+import { EntityLink, getRequiredFields, OBJECT_NAME as ENTITY_LINK_NAME } from "./queries/entity-link"
 import { EntityReference } from "./queries/entity-reference"
+
+import requiredFields from "./plugins/required-fields"
 
 const EntityMeta = objectType({
     name: "EntityMeta",
@@ -20,33 +22,23 @@ const schema = makeSchema({
     schema: process.cwd() + "/generated/schema.graphql",
     typegen: process.cwd() + "/generated/typings.ts",
   },
+  plugins: [
+    requiredFields({
+        resolvers: {
+            [ENTITY_LINK_NAME]: getRequiredFields,
+        },
+    }),
+  ],
 })
 
 const query = loadQuery(`query {
-    ad: Entity(name: "ad", ids: ["ad_3"]) {
-        _meta {
-            database
-            collection
-        }
+    ad: Entity(name: "ad", ids: ["ad_2", "ad_3"]) {
         adAccount: EntityLink(name: "adaccount", link: { field: "adAccountId" }) {
             id,
-            users: EntityReference(name: "user", ids: ["user_1"], ref: { field: "adAccountIds", list: true }) {
-                __typename
-                _meta {
-                    database
-                    collection
-                }
-                id
-            }
-            brand: EntityReference(name: "brand", ref: { field: "adAccountId" }) {
-                __typename
-                _meta {
-                    database
-                    collection
-                }
-                id
-            }
         }
+    }
+    adV2: Entity(name: "ad", ids: ["ad_1"]) {
+        id
     }
 }`)
 

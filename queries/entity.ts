@@ -27,7 +27,10 @@ const Entity = objectType({
             type: "EntityLink",
             args: EntityLinkArgs,
             nullable: true,
-            resolve: entityLinkUniqueResolver,
+            resolve(parent, args, ctx, info) {
+                console.log(ctx)
+                return entityLinkUniqueResolver(parent, args)
+            }
         }),
         t.field("EntityReference", {
             type: "EntityReference",
@@ -46,6 +49,7 @@ export const EntityQuery = queryType({
         type: Entity,
         args: EntityArgs,
         resolve(parent, args, ctx, info) {
+            console.log("entity", ctx)
             return entityResolver(args)
         }
     })

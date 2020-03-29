@@ -66,9 +66,9 @@ export interface NexusGenFieldTypes {
   }
   EntityLink: { // field return type
     _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
-    EntityLink: NexusGenRootTypes['EntityLink']; // EntityLink!
     EntityReference: NexusGenRootTypes['EntityReference'][]; // [EntityReference!]!
     id: string; // String!
+    link: NexusGenRootTypes['EntityLink']; // EntityLink!
   }
   EntityMeta: { // field return type
     collection: string; // String!
@@ -100,17 +100,17 @@ export interface NexusGenArgTypes {
     }
   }
   EntityLink: {
-    EntityLink: { // args
-      database?: string | null; // String
-      ids?: string[] | null; // [String!]
-      link: NexusGenInputs['LinkArg']; // LinkArg!
-      name: string; // String!
-    }
     EntityReference: { // args
       database?: string | null; // String
       ids?: string[] | null; // [String!]
       name: string; // String!
       ref: NexusGenInputs['ReferenceArg']; // ReferenceArg!
+    }
+    link: { // args
+      database?: string | null; // String
+      ids?: string[] | null; // [String!]
+      link: NexusGenInputs['LinkArg']; // LinkArg!
+      name: string; // String!
     }
   }
   EntityReference: {
