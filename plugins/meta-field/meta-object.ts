@@ -1,4 +1,6 @@
-import { ArgsRecord, objectType } from "nexus/dist/core";
+import { objectType } from "nexus"
+
+import { DynamicId } from "./dynamic-id-object"
 
 export const EntityMeta = objectType({
     name: "EntityMeta",
@@ -6,12 +8,6 @@ export const EntityMeta = objectType({
     definition(t) {
         t.string("database")
         t.string("collection")
+        t.field("id", { type: DynamicId })
     },
-});
-
-export interface EntityMetaType {
-    database: string
-    collection: string
-}
-
-export const buildArgs = <T extends ArgsRecord>(args: T) => args
+})

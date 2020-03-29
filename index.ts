@@ -6,23 +6,18 @@ import { EntityLink, getRequiredFields, OBJECT_NAME as ENTITY_LINK_NAME } from "
 import { EntityReference } from "./queries/entity-reference"
 
 import requiredFields from "./plugins/required-fields"
-
-const EntityMeta = objectType({
-    name: "EntityMeta",
-    description: "Entity metadata to process action on extracted datas",
-    definition(t) {
-        t.string("database")
-        t.string("collection")
-    },
-});
+import metaField from "./plugins/meta-field"
 
 const schema = makeSchema({
-  types: [EntityQuery, EntityLink, EntityReference, EntityMeta],
+  types: [EntityQuery, EntityLink, EntityReference],
   outputs: {
     schema: process.cwd() + "/generated/schema.graphql",
     typegen: process.cwd() + "/generated/typings.ts",
   },
   plugins: [
+    metaField({
+        fields: [ "Entity" ]
+    }),
     requiredFields({
         resolvers: {
             [ENTITY_LINK_NAME]: getRequiredFields,
@@ -32,13 +27,24 @@ const schema = makeSchema({
 })
 
 const query = loadQuery(`query {
-    ad: Entity(name: "ad", ids: ["ad_2", "ad_3"]) {
-        adAccount: EntityLink(name: "adaccount", link: { field: "adAccountId" }) {
-            id,
+    ad: Entity(collection: "ad", ids: ["ad_1"], id: { field: "id" }) {
+        _meta {
+            id {
+                field
+                type
+            }
         }
-    }
-    adV2: Entity(name: "ad", ids: ["ad_1"]) {
         id
+    }
+    adV2: Entity(collection: "ad", ids: ["ad_1"], id: { field: "cId" }) {
+        _meta {
+            id {
+                field
+                type
+            }
+        }
+        id
+        name
     }
 }`)
 

@@ -2,54 +2,99 @@
 ### Do not make changes to this file directly
 
 
+"""Dynamic id field informations"""
+type DynamicId {
+  field: String!
+  type: DynamicIdType!
+}
+
+input DynamicIdArg {
+  """Id field name"""
+  field: String = "_id"
+  type: DynamicIdType = ObjectId
+}
+
+"""Type of the dynamic id"""
+enum DynamicIdType {
+  ObjectId
+  String
+}
+
 """Query your root entity"""
 type Entity {
   _meta: EntityMeta!
   EntityLink(
+    """Entity collection"""
+    collection: String!
+
     """Entity database"""
-    database: String
+    db: String
+
+    """Define custom id field"""
+    id: DynamicIdArg
     ids: [String!]
     link: LinkArg!
 
-    """Entity collection name"""
-    name: String!
+    """Custom field mapped to name property"""
+    name: String = "name"
   ): EntityLink
   EntityReference(
+    """Entity collection"""
+    collection: String!
+
     """Entity database"""
-    database: String
+    db: String
+
+    """Define custom id field"""
+    id: DynamicIdArg
     ids: [String!]
 
-    """Entity collection name"""
-    name: String!
+    """Custom field mapped to name property"""
+    name: String = "name"
     ref: ReferenceArg!
   ): EntityReference
 
-  """Id of the entity"""
+  """Id value"""
   id: String!
+
+  """Custom name field"""
+  name: String
 }
 
 type EntityLink {
   _meta: EntityMeta!
   EntityReference(
+    """Entity collection"""
+    collection: String!
+
     """Entity database"""
-    database: String
+    db: String
+
+    """Define custom id field"""
+    id: DynamicIdArg
     ids: [String!]
 
-    """Entity collection name"""
-    name: String!
+    """Custom field mapped to name property"""
+    name: String = "name"
     ref: ReferenceArg!
   ): [EntityReference!]!
 
   """Id of the entity"""
   id: String!
   link(
+    """Entity collection"""
+    collection: String!
+
     """Entity database"""
-    database: String
+    db: String
+
+    """Define custom id field"""
+    id: DynamicIdArg
     ids: [String!]
     link: LinkArg!
 
-    """Entity collection name"""
-    name: String!
+    """Custom field mapped to name property"""
+    name: String = "name"
   ): EntityLink!
 }
 
@@ -57,17 +102,24 @@ type EntityLink {
 type EntityMeta {
   collection: String!
   database: String!
+  id: DynamicId!
 }
 
 type EntityReference {
   _meta: EntityMeta!
   EntityReference(
+    """Entity collection"""
+    collection: String!
+
     """Entity database"""
-    database: String
+    db: String
+
+    """Define custom id field"""
+    id: DynamicIdArg
     ids: [String!]
 
-    """Entity collection name"""
-    name: String!
+    """Custom field mapped to name property"""
+    name: String = "name"
     ref: ReferenceArg!
   ): EntityReference!
 
@@ -83,12 +135,18 @@ input LinkArg {
 
 type Query {
   Entity(
+    """Entity collection"""
+    collection: String!
+
     """Entity database"""
-    database: String
+    db: String
+
+    """Define custom id field"""
+    id: DynamicIdArg
     ids: [String!]
 
-    """Entity collection name"""
-    name: String!
+    """Custom field mapped to name property"""
+    name: String = "name"
   ): [Entity!]!
 }
 

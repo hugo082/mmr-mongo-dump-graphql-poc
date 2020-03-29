@@ -14,6 +14,10 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  DynamicIdArg: { // input type
+    field?: string | null; // String
+    type?: NexusGenEnums['DynamicIdType'] | null; // DynamicIdType
+  }
   LinkArg: { // input type
     field: string; // String!
     list?: boolean | null; // Boolean
@@ -25,12 +29,18 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  DynamicIdType: "ObjectId" | "String"
 }
 
 export interface NexusGenRootTypes {
+  DynamicId: { // root type
+    field: string; // String!
+    type: NexusGenEnums['DynamicIdType']; // DynamicIdType!
+  }
   Entity: { // root type
     _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
     id: string; // String!
+    name?: string | null; // String
   }
   EntityLink: { // root type
     _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
@@ -39,6 +49,7 @@ export interface NexusGenRootTypes {
   EntityMeta: { // root type
     collection: string; // String!
     database: string; // String!
+    id: NexusGenRootTypes['DynamicId']; // DynamicId!
   }
   EntityReference: { // root type
     _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
@@ -53,16 +64,23 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  DynamicIdArg: NexusGenInputs['DynamicIdArg'];
   LinkArg: NexusGenInputs['LinkArg'];
   ReferenceArg: NexusGenInputs['ReferenceArg'];
+  DynamicIdType: NexusGenEnums['DynamicIdType'];
 }
 
 export interface NexusGenFieldTypes {
+  DynamicId: { // field return type
+    field: string; // String!
+    type: NexusGenEnums['DynamicIdType']; // DynamicIdType!
+  }
   Entity: { // field return type
     _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
     EntityLink: NexusGenRootTypes['EntityLink'] | null; // EntityLink
     EntityReference: NexusGenRootTypes['EntityReference'] | null; // EntityReference
     id: string; // String!
+    name: string | null; // String
   }
   EntityLink: { // field return type
     _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
@@ -73,6 +91,7 @@ export interface NexusGenFieldTypes {
   EntityMeta: { // field return type
     collection: string; // String!
     database: string; // String!
+    id: NexusGenRootTypes['DynamicId']; // DynamicId!
   }
   EntityReference: { // field return type
     _meta: NexusGenRootTypes['EntityMeta']; // EntityMeta!
@@ -87,45 +106,57 @@ export interface NexusGenFieldTypes {
 export interface NexusGenArgTypes {
   Entity: {
     EntityLink: { // args
-      database?: string | null; // String
+      collection: string; // String!
+      db?: string | null; // String
+      id?: NexusGenInputs['DynamicIdArg'] | null; // DynamicIdArg
       ids?: string[] | null; // [String!]
       link: NexusGenInputs['LinkArg']; // LinkArg!
-      name: string; // String!
+      name?: string | null; // String
     }
     EntityReference: { // args
-      database?: string | null; // String
+      collection: string; // String!
+      db?: string | null; // String
+      id?: NexusGenInputs['DynamicIdArg'] | null; // DynamicIdArg
       ids?: string[] | null; // [String!]
-      name: string; // String!
+      name?: string | null; // String
       ref: NexusGenInputs['ReferenceArg']; // ReferenceArg!
     }
   }
   EntityLink: {
     EntityReference: { // args
-      database?: string | null; // String
+      collection: string; // String!
+      db?: string | null; // String
+      id?: NexusGenInputs['DynamicIdArg'] | null; // DynamicIdArg
       ids?: string[] | null; // [String!]
-      name: string; // String!
+      name?: string | null; // String
       ref: NexusGenInputs['ReferenceArg']; // ReferenceArg!
     }
     link: { // args
-      database?: string | null; // String
+      collection: string; // String!
+      db?: string | null; // String
+      id?: NexusGenInputs['DynamicIdArg'] | null; // DynamicIdArg
       ids?: string[] | null; // [String!]
       link: NexusGenInputs['LinkArg']; // LinkArg!
-      name: string; // String!
+      name?: string | null; // String
     }
   }
   EntityReference: {
     EntityReference: { // args
-      database?: string | null; // String
+      collection: string; // String!
+      db?: string | null; // String
+      id?: NexusGenInputs['DynamicIdArg'] | null; // DynamicIdArg
       ids?: string[] | null; // [String!]
-      name: string; // String!
+      name?: string | null; // String
       ref: NexusGenInputs['ReferenceArg']; // ReferenceArg!
     }
   }
   Query: {
     Entity: { // args
-      database?: string | null; // String
+      collection: string; // String!
+      db?: string | null; // String
+      id?: NexusGenInputs['DynamicIdArg'] | null; // DynamicIdArg
       ids?: string[] | null; // [String!]
-      name: string; // String!
+      name?: string | null; // String
     }
   }
 }
@@ -135,11 +166,11 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Entity" | "EntityLink" | "EntityMeta" | "EntityReference" | "Query";
+export type NexusGenObjectNames = "DynamicId" | "Entity" | "EntityLink" | "EntityMeta" | "EntityReference" | "Query";
 
-export type NexusGenInputNames = "LinkArg" | "ReferenceArg";
+export type NexusGenInputNames = "DynamicIdArg" | "LinkArg" | "ReferenceArg";
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = "DynamicIdType";
 
 export type NexusGenInterfaceNames = never;
 

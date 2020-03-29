@@ -21,8 +21,8 @@ export const db = {
         { id: "adaccount_3", name: "Ad account 3" },
     ],
     ad: [
-        { id: "ad_1", name: "Ad 1", adAccountId: "adaccount_1", network: "facebook" },
-        { id: "ad_2", name: "Ad 2", adAccountId: "adaccount_1", network: "snapchat" },
+        { id: "ad_1", cId: "c_ad_1", name: "Ad 1", adAccountId: "adaccount_1", network: "facebook" },
+        { id: "ad_2", cId: "c_ad_2",  name: "Ad 2", adAccountId: "adaccount_1", network: "snapchat" },
         { id: "ad_3", name: "Ad 3", adAccountId: "adaccount_1", network: "twitter" },
         { id: "ad_4", name: "Ad 4", adAccountId: "adaccount_2", network: "facebook" },
     ]

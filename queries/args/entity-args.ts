@@ -1,15 +1,13 @@
 import { stringArg } from "nexus/dist/core";
 
 import { buildArgs } from "../../helpers";
+import { MetaArgs, MetaArgsType } from "../../plugins/meta-field";
 
 export const EntityArgs = buildArgs({
-    name: stringArg({ nullable: false, description: "Entity collection name" }),
-    database: stringArg({ nullable: true, description: "Entity database"}),
+    ...MetaArgs,
     ids: stringArg({ list: true, nullable: true }),
 })
 
-export interface EntityArgsType {
-    name: string
-    database?: string
+export interface EntityArgsType extends MetaArgsType {
     ids?: string[]
 }
